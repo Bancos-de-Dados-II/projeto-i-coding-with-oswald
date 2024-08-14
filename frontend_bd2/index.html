@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pontos turisticos</title>
+    
+</head>
+<body>
+
+    <div id="container">
+        <div id="modal" style="display: none;">
+            <div class="popup" style="display: none;">
+                <spam id="exit">X</spam>
+                <p class="content-modal">Descrição</p>
+                <div class="buttons-modal">
+                    <button id="remove-button">Remover 🗑️</button>
+                    <button id="edit-button">Editar ✏️</button>
+                </div>
+            </div>
+            <div id="sub-modal" style="display: none;">
+                <div class="popup-external" style="display: none;">
+                    <input id="text-modal" type="text" placeholder="Altere a descrição aqui">
+                    <input type="number" name="raio" id="number-modal" placeholder="Informe o raio">
+                    <button id="confirm-edit">Salvar 💾
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="map"></div>
+
+        <form class="form-layout">
+            <h2 id="title">Selecione o tipo de marcador</h2>
+
+            <select id="select-options" name="options" id="options">
+                <option value="none" selected disabled>Selecione</option>
+                <option value="point">Ponto</option>
+                <option value="circle">Area</option>
+            </select>
+
+            <fieldset id="point-field" style="display: none;">
+                <div class="block-point-field">
+                    <label class="subtitle" for="point-latitude">Latitude</label>
+                    <input class="field" type="text" id="point-latitude" placeholder="latitude">
+                </div>
+                <div class="block-point-field">
+                    <label class="subtitle" for="point-longitude">Longitude</label>
+                    <input class="field" type="text" id="point-longitude" placeholder="longitude">
+                </div>
+                <div class="block-point-field">
+                    <label class="subtitle" for="point-text">Descrição</label>
+                    <input class="field" type="text" id="point-text" placeholder="descrição">
+                </div>
+            
+        
+            </fieldset>
+
+            <fieldset id="circle-field" style="display: none;">
+                
+                <div>
+                    <label class="subtitle" for="circle-latitude">Latitude</label>
+                    <input class="field" type="text" id="circle-latitude" placeholder="latitude">
+                </div>
+                <div>
+                    <label class="subtitle" for="circle-longitude">Longitude</label>
+                    <input class="field" id="circle-longitude" placeholder="longitude">
+                </div>
+                <div>
+                    <label class="subtitle" for="circle-raio">Raio</label>
+                    <input class="field" id="circle-raio" placeholder="raio">
+                </div>
+                <div>
+                    <label class="subtitle" for="circle-color">Cor</label>
+                    <input type="color" id="circle-color" placeholder="cor">
+                </div>
+                <div>
+                    <label class="subtitle" for="circle-text">Descrição</label>
+                    <input class="field" id="circle-text" placeholder="descrição">
+                </div>
+            </fieldset>
+
+           
+            <button class="button-style" id="point-gps" style="display: none;">Pegar posição do marcador</button>
+            <button class="button-style" id="add-marker" style="display: none;">Adicionar marcador</button>
+        </form>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

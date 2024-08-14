@@ -1,0 +1,53 @@
+services: 
+  bd: 
+    image: postgis/postgis
+    container_name: bd2_db
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    restart: always
+    networks:
+      - bd2_network
+    ports:
+      - 5432:5432
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: ./api_bd2
+    container_name: bd2_api
+    environment:
+      - DB_HOST=bd2_db
+      - DB=${POSTGRES_DB}
+      - DB_USER=${POSTGRES_USER}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "3000:3000"
+    depends_on:
+      bd:
+        condition: service_healthy
+    networks:
+      - bd2_network
+
+  web:
+    build: ./frontend_bd2
+    container_name: bd2_web
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_HOST=foobar.com
+      - NGINX_PORT=80
+    depends_on:
+      - api
+    networks:
+      - bd2_network
+
+networks:
+  bd2_network:
+    driver: bridge
